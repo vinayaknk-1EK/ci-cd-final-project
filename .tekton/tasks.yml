@@ -6,9 +6,10 @@ metadata:
 spec:
   workspaces:
     - name: source
+      description: this will remove all preexisting files from 'resources'
   steps:
     - name: remove
-      description: this will remove all preexisting files from 'resources'
+      
       image: alpine
       env: 
         - name:   workspace_source_path
@@ -43,17 +44,17 @@ metadata:
 spec:
   workspaces:
     - name: source
+      
   params:
     - name: args
-      description: arguments to pass with nose
       type: string
       default: -v
       
   steps:
     - name: nosetests
-      description: this will will perform testing of the code
+      
       image: python:3.9-slim
-      workingDir: $(workspaces.sources.path)
+      workingDir: $(workspaces.source.path)
       script: |
          #!/bin/bash
           set -e
