@@ -12,8 +12,8 @@ spec:
       
       image: alpine
       env: 
-        - name:   workspace_source_path
-          value:  ${WORKSPACE_SOURCE_PATH}
+        - name:   WORKSPACE_SOURCE_PATH
+          value:  ${workspaces.source.path}
       workingDir: $(workspaces.source.path)
       securityContext:
         runAsNonRoot: false
