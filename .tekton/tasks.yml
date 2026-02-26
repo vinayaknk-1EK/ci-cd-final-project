@@ -13,7 +13,7 @@ spec:
       image: alpine
       env: 
         - name:   WORKSPACE_SOURCE_PATH
-          value:  ${workspaces.source.path}
+          value:  $(workspaces.source.path)
       workingDir: $(workspaces.source.path)
       securityContext:
         runAsNonRoot: false
@@ -54,7 +54,7 @@ spec:
     - name: nosetests
       
       image: python:3.9-slim
-      workingDir: $(workspace.source.path)
+      workingDir: $(workspaces.source.path)
       script: |
          #!/bin/bash
           set -e
