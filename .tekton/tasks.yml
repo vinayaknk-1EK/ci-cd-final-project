@@ -8,7 +8,7 @@ spec:
       description: this will remove all preexisting files from 'resources'
   steps:
     - name: remove
-      image: alpine
+      image: alpine:3
       env: 
         - name: WORKSPACE_SOURCE_PATH
           value: $(workspaces.source.path)  # FIXED: Changed {} to ()
@@ -18,13 +18,13 @@ spec:
         runAsUser: 0
       script: |
         #!/usr/bin/env sh
-        set -eu
-        echo "Removing all files from ${WORKSPACE_SOURCE_PATH} ..."
-        if [ -d "${WORKSPACE_SOURCE_PATH}" ] ; then
-          rm -rf "${WORKSPACE_SOURCE_PATH:?}"/*
-          rm -rf "${WORKSPACE_SOURCE_PATH}"/.[!.]*
-          rm -rf "${WORKSPACE_SOURCE_PATH}"/..?*
-        fi
+          set -eu
+          echo "Removing all files from ${WORKSPACE_SOURCE_PATH} ..."
+          if [ -d "${WORKSPACE_SOURCE_PATH}" ] ; then
+            rm -rf "${WORKSPACE_SOURCE_PATH:?}"/*
+            rm -rf "${WORKSPACE_SOURCE_PATH}"/.[!.]*
+            rm -rf "${WORKSPACE_SOURCE_PATH}"/..?*
+          fi
 
 ---
 apiVersion: tekton.dev/v1beta1
@@ -43,8 +43,8 @@ spec:
       image: python:3.9-slim
       workingDir: $(workspaces.source.path) # FIXED: Changed 'workspace' to 'workspaces'
       script: |
-          #!/bin/bash
-          set -e
-          python -m pip install --upgrade pip wheel
-          pip install -r requirements.txt
-          nosetests $(params.args)
+        #!/bin/bash
+        set -e
+        python -m pip install --upgrade pip wheel
+        pip install -r requirements.txt
+        nosetests $(params.args)
